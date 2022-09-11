@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using BuggyCarsAPITest.Models;
+using NUnit.Framework;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,10 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
+using NUnit.Framework;
+using RestSharp;
+using RestSharp.Deserializers;
+
 namespace BuggyCarsAPITest
 {
     [TestFixture]
@@ -14,6 +19,27 @@ namespace BuggyCarsAPITest
     {
          private string hostUrl = "https://k51qryqov3.execute-api.ap-southeast-2.amazonaws.com/";
          private string profileUrlPath = "prod/users/profile";
+        private string tokenUrlPath = "prod/oauth/token";
+
+
+        [Test]
+        public async void LoginStatusOKTest()
+        {
+            var client = new RestClient(hostUrl);
+            var request = new RestRequest(tokenUrlPath, Method.Post);
+
+            request.AddParameter("grant_type", "password");
+            request.AddParameter("username", "Anu4");
+            request.AddParameter("password", "Test@1234567");
+
+            RestResponse response = await client.ExecuteAsync<RestResponse>(request);
+
+            ResponseToken tokenResponse = new JsonDeserializer().Deserialize<ResponseToken>(response);
+
+
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+
+        }
 
         [Test]
         public void ProfileEndPointStatusOKTest()
