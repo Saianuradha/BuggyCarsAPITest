@@ -82,6 +82,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\ResponseProfile.cs" />
     <Compile Include="Models\ResponseToken.cs" />
     <Compile Include="Tests\Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
